@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katalog Mobil Bekas — Mobil Katte</title>
+  <meta name="description" content="Jelajahi katalog mobil bekas lengkap. Cari berdasarkan nama, brand, tipe, filter harga, tahun, dan status pajak." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=4" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>" />
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <div class="container" style="padding-top:36px;">
+    <nav class="breadcrumb">
+      <a href="index.html">Home</a><span class="sep">/</span><span>Katalog Mobil</span>
+    </nav>
+
+    <div class="catalog">
+      <!-- SIDEBAR FILTER -->
+      <aside class="filter-panel" id="filterPanel">
+        <h3>Filter Kendaraan
+          <button class="btn btn--sm btn--outline filter-close" onclick="toggleFilterPanel()">✕</button>
+          <button class="btn btn--sm btn--outline" onclick="resetFilters()" style="padding:4px 10px;">Reset</button>
+        </h3>
+
+        <div class="filter-group">
+          <h4>Rentang Harga</h4>
+          <div class="price-range">
+            <div>
+              <label>Harga Minimum (Rp)</label>
+              <input id="fMin" type="number" min="0" step="1000000" placeholder="150000000" />
+            </div>
+            <div>
+              <label>Harga Maksimum (Rp)</label>
+              <input id="fMax" type="number" min="0" step="1000000" placeholder="250000000" />
+            </div>
+            <button class="btn btn--primary btn--sm btn--block" onclick="applyCustomRange()">Terapkan Filter</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Pilihan Cepat</h4>
+          <div id="quickPriceFilter"></div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Brand</h4>
+          <div id="brandFilter"></div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Tahun</h4>
+          <div id="yearFilter"></div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Status Pajak</h4>
+          <div id="taxFilter"></div>
+        </div>
+
+        <div class="filter-group">
+          <h4>Status Kendaraan</h4>
+          <div id="statusFilter"></div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="catalog__main">
+        <button class="btn btn--outline catalog__filtertoggle" onclick="toggleFilterPanel()">Filter & Urutkan</button>
+
+        <div class="catalog__toolbar">
+          <div class="count" id="resultCount"></div>
+          <div class="catalog__sort">
+            <label for="sortSelect">Urutkan:</label>
+            <select id="sortSelect" onchange="applyFilters()">
+              <option value="terbaru">Terbaru</option>
+              <option value="harga-asc">Harga Termurah</option>
+              <option value="harga-desc">Harga Termahal</option>
+              <option value="tahun-desc">Tahun Terbaru</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid" id="carGrid"></div>
+
+        <div class="pagination" id="pagination"></div>
+      </main>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="js/data.js?v=4"></script>
+  <script src="js/main.js?v=4"></script>
+  <script src="js/catalog.js?v=4"></script>
+</body>
+</html>

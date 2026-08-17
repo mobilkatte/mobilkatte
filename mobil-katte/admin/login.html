@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin — Mobil Katte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=2" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="logo"><img src="../assets/logo.png" alt="Mobil Katte" class="brand-logo"><span>MOBIL KATTE</span></div>
+      <p class="sub">Masuk ke Administrator Dashboard</p>
+
+      <div class="auth-error" id="authError">Email atau password salah. Silakan coba lagi.</div>
+
+      <form onsubmit="event.preventDefault(); doLogin();">
+        <div class="field">
+          <label for="email">Email / Username</label>
+          <input type="text" id="email" placeholder="admin@mobilkatte.com" autocomplete="username" required />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+        <div class="forgot"><a href="#" onclick="return false;">Lupa password?</a></div>
+        <button type="submit" class="btn btn--primary btn--lg btn--block mt-16">Login</button>
+      </form>
+
+      <div class="demo-note">
+        <b>Akun demo:</b> admin@mobilkatte.com · admin123
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/data.js?v=4"></script>
+  <script src="../js/main.js?v=4"></script>
+  <script>
+    if (localStorage.getItem("mk_admin")) window.location.href = "dashboard.html";
+
+    function doLogin() {
+      var email = document.getElementById("email").value.trim();
+      var password = document.getElementById("password").value;
+      var err = document.getElementById("authError");
+
+      if (email.toLowerCase() === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        localStorage.setItem("mk_admin", JSON.stringify({ email: email, name: "Administrator", loginAt: new Date().toISOString() }));
+        window.location.href = "dashboard.html";
+      } else {
+        err.classList.add("show");
+      }
+    }
+  </script>
+</body>
+</html>

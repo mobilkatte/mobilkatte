@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mobil Katte — Temukan Mobil Bekas Impianmu | Katalog Mobil Bekas</title>
+  <meta name="description" content="Pilihan mobil bekas berkualitas dengan informasi kendaraan yang transparan. Cari, filter harga, dan hubungi Mobil Katte langsung via WhatsApp." />
+  <meta property="og:title" content="Mobil Katte — Katalog Mobil Bekas" />
+  <meta property="og:description" content="Temukan mobil bekas impianmu di Mobil Katte. Pilihan mobil bekas berkualitas dengan informasi kendaraan yang transparan." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=4" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>" />
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <h1>Temukan Mobil Bekas <span>Impianmu</span> di Mobil Katte</h1>
+      <p class="hero__sub">Pilihan mobil bekas berkualitas dengan informasi kendaraan yang transparan. Tanpa ribet, langsung hubungi penjual.</p>
+
+      <form class="hero__searchbox" onsubmit="event.preventDefault(); heroSearch();">
+        <input id="heroSearchInput" type="text" placeholder="Cari mobil, brand, atau tipe... (mis. Avanza, Toyota, Brio)" />
+        <button type="submit" class="btn btn--primary" style="padding:12px 28px;">Cari</button>
+      </form>
+
+      <div class="hero__quick" id="quickFilters">
+        <a href="mobil.html?min=0&max=100000000">Di bawah Rp100 juta</a>
+        <a href="mobil.html?min=100000000&max=150000000">Rp100–150 juta</a>
+        <a href="mobil.html?min=150000000&max=200000000">Rp150–200 juta</a>
+        <a href="mobil.html?min=200000000&max=300000000">Rp200–300 juta</a>
+        <a href="mobil.html?min=300000000&max=500000000">Rp300–500 juta</a>
+        <a href="mobil.html?min=500000000&max=999999999999">Di atas Rp500 juta</a>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat"><b>125+</b><span>Kendaraan Tersedia</span></div>
+        <div class="stat"><b>12</b><span>Brand Mobil</span></div>
+        <div class="stat"><b>100%</b><span>Info Transparan</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOBIL PILIHAN -->
+  <section class="section" id="pilihan">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Pilihan</span>
+        <h2>Mobil Pilihan</h2>
+        <p>Kendaraan pilihan terbaik yang paling diminati pelanggan bulan ini.</p>
+      </div>
+      <div class="grid" id="featuredGrid"></div>
+      <div class="ta-center mt-24">
+        <a href="mobil.html" class="btn btn--dark btn--lg">Lihat Semua Katalog →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOBIL TERBARU -->
+  <section class="section section--alt" id="terbaru">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Terbaru</span>
+        <h2>Mobil Terbaru</h2>
+        <p>Unit-unit terbaru yang baru saja masuk ke showroom Mobil Katte.</p>
+      </div>
+      <div class="grid" id="newGrid"></div>
+    </div>
+  </section>
+
+  <!-- MENGAPA MOBIL KATTE -->
+  <section class="section" id="tentang">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Kenapa Kami</span>
+        <h2>Mengapa Mobil Katte?</h2>
+        <p>Kami membuat jual beli mobil bekas jadi mudah, jelas, dan terpercaya.</p>
+      </div>
+      <div class="why">
+        <div class="why__item">
+          <div class="icon" id="ic1"></div>
+          <h3>Informasi Jelas</h3>
+          <p>Setiap mobil dilengkapi data lengkap: tahun, pajak, kilometer, hingga kondisi kendaraan.</p>
+        </div>
+        <div class="why__item">
+          <div class="icon" id="ic2"></div>
+          <h3>Pilihan Beragam</h3>
+          <p>Ratusan mobil dari 12+ brand ternama dengan berbagai tipe dan rentang harga.</p>
+        </div>
+        <div class="why__item">
+          <div class="icon" id="ic3"></div>
+          <h3>Harga Transparan</h3>
+          <p>Harga tertera jelas di setiap unit. Tanpa biaya tersembunyi, apa adanya.</p>
+        </div>
+        <div class="why__item">
+          <div class="icon" id="ic4"></div>
+          <h3>Mudah Dihubungi</h3>
+          <p>Hubungi kami langsung lewat WhatsApp dengan satu klik dari halaman mobil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h2>Tidak menemukan mobil yang Anda cari?</h2>
+        <p>Kami bantu cari mobil bekas sesuai budget dan kebutuhan Anda. Cukup kirim pesan ke WhatsApp kami.</p>
+        <a href="https://wa.me/6281234567890?text=Halo%20Mobil%20Katte%2C%20saya%20mencari%20mobil%20bekas..." target="_blank" class="btn btn--white btn--lg">Chat via WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="js/data.js?v=4"></script>
+  <script src="js/main.js?v=4"></script>
+  <script>
+    function heroSearch() {
+      var q = document.getElementById("heroSearchInput").value.trim();
+      window.location.href = "mobil.html" + (q ? "?keyword=" + encodeURIComponent(q) : "");
+    }
+
+    function renderIndex() {
+      var featured = getCars().filter(function (c) { return c.featured && c.status !== "Terjual"; }).slice(0, 4);
+      var newest = getCars().filter(function (c) { return c.status !== "Terjual"; })
+        .sort(function (a, b) { return new Date(b.createdAt) - new Date(a.createdAt); }).slice(0, 8);
+
+      document.getElementById("featuredGrid").innerHTML = featured.map(carCardHTML).join("");
+      document.getElementById("newGrid").innerHTML = newest.map(carCardHTML).join("");
+    }
+
+    mountShared("home");
+    document.getElementById("ic1").innerHTML = Icons.shield;
+    document.getElementById("ic2").innerHTML = Icons.car;
+    document.getElementById("ic3").innerHTML = Icons.money;
+    document.getElementById("ic4").innerHTML = Icons.whatsapp;
+    renderIndex();
+  </script>
+</body>
+</html>
