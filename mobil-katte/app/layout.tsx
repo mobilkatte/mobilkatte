@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { ToastProvider } from "@/components/Toast";
+import { CarsProvider } from "@/lib/data-context";
 import "./globals.css";
 
 const inter = Inter({
@@ -31,7 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" className={`${inter.variable} ${plusJakarta.variable}`}>
       <body>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <CarsProvider>{children}</CarsProvider>
+        </ToastProvider>
       </body>
     </html>
   );

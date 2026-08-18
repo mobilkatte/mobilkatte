@@ -5,63 +5,64 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import RequireAuth from "@/components/admin/RequireAuth";
 import { IconBrand, IconEdit, IconSearch, IconTrash } from "@/components/icons";
 import { useToast } from "@/components/Toast";
-import { getBrandList, slugify } from "@/lib/data";
-import { useCars } from "@/lib/storage";
+import { useCars } from "@/lib/data-context";
+import type { Brand } from "@/lib/types";
 
 export default function AdminBrandsPage() {
-  const { cars, commit } = useCars(true);
+  const { brands, addBrand, renameBrand, deleteBrandById } = useCars();
   const toast = useToast();
   const [kw, setKw] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [editingIndex, setEditingIndex] = useState(-1);
+  const [editingBrand, setEditingBrand] = useState<Brand | null>(null);
   const [input, setInput] = useState("");
 
-  const brands = useMemo(() => {
+  const filtered = useMemo(() => {
     const q = kw.trim().toLowerCase();
-    const list = getBrandList(cars);
-    return q ? list.filter((b) => b.toLowerCase().includes(q)) : list;
-  }, [cars, kw]);
-
-  const countFor = (brand: string) => cars.filter((c) => c.brand === brand).length;
+    return q ? brands.filter((b) => b.name.toLowerCase().includes(q)) : brands;
+  }, [brands, kw]);
 
   const openAdd = () => {
-    setEditingIndex(-1);
+    setEditingBrand(null);
     setInput("");
     setModalOpen(true);
   };
 
-  const openEdit = (i: number) => {
-    const list = getBrandList(cars);
-    setEditingIndex(list.indexOf(list[i]));
-    setInput(list[i]);
+  const openEdit = (b: Brand) => {
+    setEditingBrand(b);
+    setInput(b.name);
     setModalOpen(true);
   };
 
   const closeModal = () => setModalOpen(false);
 
-  const saveBrand = () => {
+  const saveBrand = async () => {
     const name = input.trim();
     if (!name) {
       toast("Nama brand tidak boleh kosong.", "error");
       return;
     }
-    const list = [...cars];
-    if (editingIndex >= 0) {
-      const oldName = getBrandList(cars)[editingIndex];
-      list.forEach((c) => {
-        if (c.brand === oldName) c.brand = name;
-      });
-      commit(list);
-      toast("Brand berhasil diperbarui.");
-    } else {
-      toast("Brand " + name + " ditambahkan (simulasi — ubah di database untuk MVP).");
+    try {
+      if (editingBrand) {
+        await renameBrand(editingBrand.id, name);
+        toast("Brand berhasil diperbarui.");
+      } else {
+        await addBrand(name);
+        toast("Brand berhasil ditambahkan.");
+      }
+    } catch (err) {
+      toast(err instanceof Error ? err.message : "Gagal menyimpan brand.", "error");
+      return;
     }
     closeModal();
   };
 
-  const deleteBrand = (i: number) => {
-    const name = getBrandList(cars)[i];
-    toast("Brand " + name + " dihapus (simulasi).", "error");
+  const deleteBrand = async (b: Brand) => {
+    try {
+      await deleteBrandById(b.id);
+      toast("Brand berhasil dihapus.");
+    } catch (err) {
+      toast(err instanceof Error ? err.message : "Gagal menghapus brand.", "error");
+    }
   };
 
   return (
@@ -104,21 +105,21 @@ export default function AdminBrandsPage() {
                 </tr>
               </thead>
               <tbody id="brandRows">
-                {brands.length ? (
-                  brands.map((b, i) => (
-                    <tr key={b}>
+                {filtered.length ? (
+                  filtered.map((b, i) => (
+                    <tr key={b.id}>
                       <td>{i + 1}</td>
                       <td>
-                        <b>{b}</b>
+                        <b>{b.name}</b>
                       </td>
-                      <td>{slugify(b)}</td>
-                      <td>{countFor(b)}</td>
+                      <td>{b.slug}</td>
+                      <td>{b.count ?? 0}</td>
                       <td>
                         <div className="row-actions">
-                          <button className="action-btn action-btn--edit" onClick={() => openEdit(i)}>
+                          <button className="action-btn action-btn--edit" onClick={() => openEdit(b)}>
                             <IconEdit /> Edit
                           </button>
-                          <button className="action-btn action-btn--del" onClick={() => deleteBrand(i)}>
+                          <button className="action-btn action-btn--del" onClick={() => deleteBrand(b)}>
                             <IconTrash /> Hapus
                           </button>
                         </div>
@@ -140,7 +141,7 @@ export default function AdminBrandsPage() {
             <div className="modal-icon" style={{ background: "var(--accent-soft)", color: "var(--accent-dark)" }} id="icBrand">
               <IconBrand />
             </div>
-            <h3 id="brandModalTitle">{editingIndex >= 0 ? "Edit Brand" : "Tambah Brand"}</h3>
+            <h3 id="brandModalTitle">{editingBrand ? "Edit Brand" : "Tambah Brand"}</h3>
             <div className="field">
               <label>Nama Brand</label>
               <input

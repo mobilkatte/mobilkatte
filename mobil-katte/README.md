@@ -1,5 +1,33 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Database (Supabase)
+
+Aplikasi menyimpan data di Supabase (PostgreSQL). Skema + seed tersedia sebagai migrasi bernomor di `supabase/migrations/` (`001`, `002`, `003`). Terapkan urut ke project Supabase Anda, mis. via SQL editor di dashboard, lalu isi `.env.local` (lihat `.env.local.example`):
+
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+AUTH_SECRET=...
+```
+
+Login admin demo: `admin@mobilkatte.com` / `admin123`.
+
+## API Routes
+
+| Route | Method | Deskripsi |
+| --- | --- | --- |
+| `/api/cars` | GET | Daftar mobil (filter: `keyword`, `brand`, `min`, `max`, `status`, `tax`, `featured`, `includeDeleted`) |
+| `/api/cars` | POST | Tambah mobil (admin) |
+| `/api/cars/[id]` | GET/PUT/DELETE | Detail, update, soft delete (admin) |
+| `/api/cars/[id]/restore` | PATCH | Pulihkan mobil yang dihapus (admin) |
+| `/api/cars/slug/[slug]` | GET | Detail mobil berdasarkan slug |
+| `/api/brands` | GET/POST | Daftar / tambah brand |
+| `/api/brands/[id]` | PUT/DELETE | Ubah / hapus brand (admin) |
+| `/api/settings` | GET | Pengaturan aplikasi (nomor WA, email admin) |
+| `/api/admin/login` | POST | Login admin → token |
+
+Akses tulis membutuhkan header `Authorization: Bearer <token>` yang diperoleh dari `/api/admin/login`.
+
 ## Getting Started
 
 First, run the development server:

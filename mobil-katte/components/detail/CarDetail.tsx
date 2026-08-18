@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { findCarBySlug, formatRupiah, formatShortPrice, photoFallback, waLink } from "@/lib/data";
-import { useCars } from "@/lib/storage";
+import { useCars } from "@/lib/data-context";
 import { StatusBadge, TaxBadge } from "@/components/Badges";
 import SmartImage from "@/components/SmartImage";
 import {
@@ -20,7 +20,7 @@ import {
 
 export default function CarDetail() {
   const params = useParams<{ slug: string }>();
-  const { cars } = useCars();
+  const { cars, settings } = useCars();
   const slug = typeof params?.slug === "string" ? params.slug : "";
   const car = useMemo(() => findCarBySlug(cars, slug), [cars, slug]);
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -104,7 +104,7 @@ export default function CarDetail() {
     ["Video", videoHTML],
   ];
 
-  const waHref = waLink(car);
+  const waHref = waLink(car, settings?.wa_number);
 
   return (
     <div className="container">

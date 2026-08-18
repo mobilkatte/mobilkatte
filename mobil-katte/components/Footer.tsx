@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { WA_NUMBER } from "@/lib/data";
+import { useCars } from "@/lib/data-context";
 import { IconFacebook, IconInstagram, IconMap, IconPhone, IconTiktok, IconWhatsapp } from "./icons";
 
 export default function Footer() {
+  const { settings } = useCars();
+  const waNumber = settings?.wa_number || WA_NUMBER;
   return (
     <footer className="footer" id="kontak">
       <div className="container footer__top">
@@ -55,7 +58,7 @@ export default function Footer() {
           <ul>
             <li style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <IconWhatsapp />
-              <a href={`https://wa.me/${WA_NUMBER}`} target="_blank" rel="noopener noreferrer">
+              <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer">
                 WhatsApp
               </a>
             </li>

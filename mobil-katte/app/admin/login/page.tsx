@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useAdminAuth } from "@/lib/storage";
+import { useAdminAuth } from "@/lib/data-context";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -15,9 +15,10 @@ export default function AdminLoginPage() {
     if (authed) router.replace("/admin/dashboard");
   }, [authed, router]);
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (login(email, password)) {
+    const ok = await login(email, password);
+    if (ok) {
       router.replace("/admin/dashboard");
     } else {
       setShowError(true);

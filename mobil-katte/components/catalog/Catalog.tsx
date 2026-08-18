@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CarCard from "@/components/CarCard";
-import { BRANDS, slugify } from "@/lib/data";
-import { useCars } from "@/lib/storage";
+import { slugify } from "@/lib/data";
+import { useCars } from "@/lib/data-context";
 import { IconClose, IconSearch } from "@/components/icons";
 
 export interface CatalogInitialParams {
@@ -42,7 +42,7 @@ interface FilterState {
 
 export default function Catalog({ initialParams }: { initialParams: CatalogInitialParams }) {
   const router = useRouter();
-  const { cars } = useCars();
+  const { cars, brands } = useCars();
   const [panelOpen, setPanelOpen] = useState(false);
   const [minInput, setMinInput] = useState(initialParams.min !== null ? String(initialParams.min) : "");
   const [maxInput, setMaxInput] = useState(initialParams.max !== null ? String(initialParams.max) : "");
@@ -245,17 +245,16 @@ export default function Catalog({ initialParams }: { initialParams: CatalogIniti
           <div className="filter-group">
             <h4>Brand</h4>
             <div id="brandFilter">
-              {BRANDS.map((b) => {
-                const slug = slugify(b);
+              {brands.map((b) => {
                 return (
-                  <label key={b}>
+                  <label key={b.id}>
                     <input
                       type="checkbox"
-                      value={slug}
-                      checked={state.brands.includes(slug)}
-                      onChange={(e) => toggleBrand(slug, e.target.checked)}
+                      value={b.slug}
+                      checked={state.brands.includes(b.slug)}
+                      onChange={(e) => toggleBrand(b.slug, e.target.checked)}
                     />
-                    {b}
+                    {b.name}
                   </label>
                 );
               })}

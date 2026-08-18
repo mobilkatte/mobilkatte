@@ -3,9 +3,9 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/Toast";
-import { getBrandList, photoFallback, SLOT_NAMES, slugify } from "@/lib/data";
-import { useCars } from "@/lib/storage";
-import type { Car } from "@/lib/types";
+import { photoFallback, SLOT_NAMES } from "@/lib/data";
+import { useCars } from "@/lib/data-context";
+import type { CarInput } from "@/lib/types";
 
 const EMPTY_FORM = {
   brand: "",
@@ -32,7 +32,7 @@ const MAX_PHOTOS = 8;
 export default function CarForm({ editingId }: { editingId?: number }) {
   const router = useRouter();
   const toast = useToast();
-  const { cars, commit } = useCars(true);
+  const { cars, brands, saveCar } = useCars();
   const [form, setForm] = useState({ ...EMPTY_FORM });
   const [photos, setPhotos] = useState<(string | null)[]>(Array(MAX_PHOTOS).fill(null));
   const [source, setSource] = useState("");
@@ -127,7 +127,7 @@ export default function CarForm({ editingId }: { editingId?: number }) {
 
   const filledCount = photos.filter(Boolean).length;
 
-  const saveCar = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const brand = form.brand;
     const name = form.name.trim();
@@ -140,7 +140,7 @@ export default function CarForm({ editingId }: { editingId?: number }) {
       return;
     }
 
-    const data = {
+    const data: CarInput = {
       brand,
       name,
       type,
@@ -161,30 +161,18 @@ export default function CarForm({ editingId }: { editingId?: number }) {
       photos: filledCount ? (photos.filter(Boolean) as string[]) : [photoFallback()],
     };
 
-    const list = [...cars];
-    if (editingId) {
-      const car = list.find((c) => c.id === editingId);
-      if (car) Object.assign(car, data);
-      commit(list);
-      toast("Data mobil berhasil diperbarui.");
-    } else {
-      const newId = list.reduce((m, c) => Math.max(m, c.id), 0) + 1;
-      const newCar: Car = {
-        ...data,
-        id: newId,
-        slug: slugify(brand + " " + name + " " + type + " " + year) + "-" + newId,
-        featured: false,
-        createdAt: new Date().toISOString().slice(0, 10),
-      };
-      list.push(newCar);
-      commit(list);
-      toast("Mobil baru berhasil disimpan.");
+    try {
+      await saveCar(data, editingId);
+      toast(editingId ? "Data mobil berhasil diperbarui." : "Mobil baru berhasil disimpan.");
+    } catch (err) {
+      toast(err instanceof Error ? err.message : "Gagal menyimpan mobil.", "error");
+      return;
     }
-    setTimeout(() => router.push("/admin/cars"), 900);
+    setTimeout(() => router.push("/admin/cars"), 600);
   };
 
   return (
-    <form onSubmit={saveCar}>
+    <form onSubmit={handleSubmit}>
       <div className="card-panel mt-16">
         <h3>Informasi Mobil</h3>
         <p className="panel-sub">Data utama kendaraan yang tampil di katalog publik.</p>
@@ -195,8 +183,10 @@ export default function CarForm({ editingId }: { editingId?: number }) {
             </label>
             <select value={form.brand} onChange={(e) => set("brand", e.target.value)}>
               <option value="">-- Pilih Brand --</option>
-              {getBrandList(cars).map((b) => (
-                <option key={b}>{b}</option>
+              {brands.map((b) => (
+                <option key={b.id} value={b.name}>
+                  {b.name}
+                </option>
               ))}
             </select>
           </div>

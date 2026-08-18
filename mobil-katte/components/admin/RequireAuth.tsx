@@ -2,7 +2,7 @@
 
 import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { useAdminAuth } from "@/lib/storage";
+import { useAdminAuth } from "@/lib/data-context";
 
 export default function RequireAuth({ children }: { children: ReactNode }) {
   const { authed } = useAdminAuth();

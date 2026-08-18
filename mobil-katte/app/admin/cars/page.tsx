@@ -8,14 +8,13 @@ import DeleteModal from "@/components/admin/DeleteModal";
 import RequireAuth from "@/components/admin/RequireAuth";
 import { IconSearch } from "@/components/icons";
 import { useToast } from "@/components/Toast";
-import { BRANDS } from "@/lib/data";
-import { useCars } from "@/lib/storage";
+import { useCars } from "@/lib/data-context";
 import type { Car } from "@/lib/types";
 
 const PER_PAGE = 6;
 
 export default function AdminCarsPage() {
-  const { cars, commit } = useCars();
+  const { cars, brands, removeCar } = useCars();
   const toast = useToast();
   const [kw, setKw] = useState("");
   const [fBrand, setFBrand] = useState("");
@@ -42,14 +41,13 @@ export default function AdminCarsPage() {
   const current = Math.min(page, totalPages);
   const pageItems = filtered.slice((current - 1) * PER_PAGE, current * PER_PAGE);
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!deleteTarget) return;
-    const list = [...cars];
-    const car = list.find((c) => c.id === deleteTarget.id);
-    if (car) {
-      car.deletedAt = new Date().toISOString();
-      commit(list);
+    try {
+      await removeCar(deleteTarget.id);
       toast("Kendaraan berhasil dihapus (soft delete).");
+    } catch (err) {
+      toast(err instanceof Error ? err.message : "Gagal menghapus kendaraan.", "error");
     }
     setDeleteTarget(null);
   };
@@ -92,8 +90,10 @@ export default function AdminCarsPage() {
               }}
             >
               <option value="">Semua Brand</option>
-              {BRANDS.map((b) => (
-                <option key={b}>{b}</option>
+              {brands.map((b) => (
+                <option key={b.id} value={b.name}>
+                  {b.name}
+                </option>
               ))}
             </select>
             <select

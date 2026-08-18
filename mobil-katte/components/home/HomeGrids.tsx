@@ -1,7 +1,7 @@
 "use client";
 
 import CarCard from "@/components/CarCard";
-import { useCars } from "@/lib/storage";
+import { useCars } from "@/lib/data-context";
 
 export function FeaturedGrid() {
   const { cars } = useCars();

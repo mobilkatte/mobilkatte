@@ -9,11 +9,11 @@ import RequireAuth from "@/components/admin/RequireAuth";
 import { IconCar2, IconCheck, IconClose, IconMoney, IconSearch, IconShield } from "@/components/icons";
 import { useToast } from "@/components/Toast";
 import { formatRupiah } from "@/lib/data";
-import { useCars } from "@/lib/storage";
+import { useCars } from "@/lib/data-context";
 import type { Car } from "@/lib/types";
 
 export default function AdminDashboardPage() {
-  const { cars, commit } = useCars();
+  const { cars, removeCar } = useCars();
   const toast = useToast();
   const [kw, setKw] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<Car | null>(null);
@@ -40,14 +40,13 @@ export default function AdminDashboardPage() {
     return list.slice(0, 6);
   }, [cars, kw]);
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!deleteTarget) return;
-    const list = [...cars];
-    const car = list.find((c) => c.id === deleteTarget.id);
-    if (car) {
-      car.deletedAt = new Date().toISOString();
-      commit(list);
+    try {
+      await removeCar(deleteTarget.id);
       toast("Kendaraan berhasil dihapus (soft delete).");
+    } catch (err) {
+      toast(err instanceof Error ? err.message : "Gagal menghapus kendaraan.", "error");
     }
     setDeleteTarget(null);
   };
