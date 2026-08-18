@@ -2,10 +2,12 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/Toast";
 import { useAdminAuth } from "@/lib/data-context";
 
 export default function AdminLoginPage() {
   const router = useRouter();
+  const toast = useToast();
   const { authed, login } = useAdminAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +24,7 @@ export default function AdminLoginPage() {
       router.replace("/admin/dashboard");
     } else {
       setShowError(true);
+      toast("Email atau password salah. Silakan coba lagi.", "error");
     }
   };
 
