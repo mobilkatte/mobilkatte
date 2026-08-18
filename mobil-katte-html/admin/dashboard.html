@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Mobil Katte Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css?v=12" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>" />
+</head>
+<body>
+  <div class="admin">
+    <div id="adminSidebar"></div>
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div>
+          <button class="admin-burger" onclick="toggleAdminNav()">☰</button>
+          <h1>Dashboard</h1>
+          <div class="sub">Ringkasan statistik katalog Mobil Katte</div>
+        </div>
+        <a href="car-form.html" class="btn btn--primary">+ Tambah Mobil</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card stat-card--1"><div class="icon" id="icStatCar"></div><div><div class="num" id="stTotal">0</div><div class="lbl">Total Mobil</div></div></div>
+        <div class="stat-card stat-card--2"><div class="icon" id="icStatCheck"></div><div><div class="num" id="stAktif">0</div><div class="lbl">Mobil Aktif</div></div></div>
+        <div class="stat-card stat-card--3"><div class="icon" id="icStatShield"></div><div><div class="num" id="stPajak">0</div><div class="lbl">Pajak Aktif</div></div></div>
+        <div class="stat-card stat-card--4"><div class="icon" id="icStatX"></div><div><div class="num" id="stNonPajak">0</div><div class="lbl">Pajak Tidak Aktif</div></div></div>
+        <div class="stat-card stat-card--5"><div class="icon" id="icStatMoney"></div><div><div class="num" id="stNilai" style="font-size:17px;">Rp 0</div><div class="lbl">Total Nilai Inventory</div></div></div>
+      </div>
+
+      <div class="card-panel">
+        <h3>Mobil Terbaru</h3>
+        <p class="panel-sub">Unit yang paling baru dimasukkan ke katalog.</p>
+        <div class="data-toolbar">
+          <div class="search"><span class="search-icon" id="icRecentSearch"></span><input id="recentSearch" type="text" placeholder="Cari mobil terbaru, brand, tipe..." oninput="renderDashboard()" /></div>
+          <span class="catalog__toolbar count" id="recentCount"></span>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Foto</th><th>Mobil</th><th>Type</th><th>Tahun</th><th>Harga</th><th>Pajak</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="recentRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/data.js?v=12"></script>
+  <script src="../js/main.js?v=12"></script>
+  <script src="admin.js?v=12"></script>
+</body>
+</html>
