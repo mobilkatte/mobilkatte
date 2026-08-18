@@ -131,6 +131,14 @@ export function fetchSettings(): Promise<Settings> {
   return http<{ settings: Settings }>("/api/settings").then((d) => d.settings);
 }
 
+export function updateSettings(patch: Partial<Settings>): Promise<{ ok: boolean }> {
+  return http<{ ok: boolean }>("/api/settings", {
+    method: "PUT",
+    headers: authHeaders({ "Content-Type": "application/json" }),
+    body: JSON.stringify(patch),
+  });
+}
+
 export async function adminLogin(email: string, password: string): Promise<boolean> {
   const data = await http<{ token: string; email: string; name: string }>("/api/admin/login", {
     method: "POST",

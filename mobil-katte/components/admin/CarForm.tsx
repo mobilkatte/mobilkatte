@@ -125,6 +125,15 @@ export default function CarForm({ editingId }: { editingId?: number }) {
     });
   };
 
+  const removePhoto = (index: number) => {
+    setPhotos((p) => {
+      const next = [...p];
+      next[index] = null;
+      return next;
+    });
+    toast(`Foto ${SLOT_NAMES[index]} dihapus.`);
+  };
+
   const filledCount = photos.filter(Boolean).length;
 
   const handleSubmit = async (e: FormEvent) => {
@@ -380,6 +389,21 @@ export default function CarForm({ editingId }: { editingId?: number }) {
             return (
               <label className={`upload-slot${photo ? " is-primary" : ""}`} key={name}>
                 {i === 0 && photo ? <span className="primary-tag">UTAMA</span> : null}
+                {photo ? (
+                  <button
+                    type="button"
+                    className="remove"
+                    aria-label={`Hapus ${name}`}
+                    title="Hapus foto"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      removePhoto(i);
+                    }}
+                  >
+                    ×
+                  </button>
+                ) : null}
                 {photo ? <img src={photo} alt={name} /> : null}
                 <span className="tag">{photo ? name : "+ " + name}</span>
                 <span className="note">{photo ? "Klik untuk ganti" : "Klik untuk upload"}</span>

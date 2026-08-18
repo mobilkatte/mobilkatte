@@ -141,3 +141,9 @@ insert into public.admins (email, password_hash, name) values
 insert into public.settings (key, value) values
   ('wa_number', '6281234567890'),
   ('admin_email', 'admin@mobilkatte.com');
+
+-- Sinkronkan identity sequence (id dimasukkan eksplisit, sequence tidak ikut naik).
+select setval(pg_get_serial_sequence('public.brands', 'id'), (select coalesce(max(id), 1) from public.brands));
+select setval(pg_get_serial_sequence('public.cars', 'id'), (select coalesce(max(id), 1) from public.cars));
+select setval(pg_get_serial_sequence('public.car_photos', 'id'), (select coalesce(max(id), 1) from public.car_photos));
+select setval(pg_get_serial_sequence('public.admins', 'id'), (select coalesce(max(id), 1) from public.admins));

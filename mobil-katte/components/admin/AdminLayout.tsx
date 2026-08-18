@@ -33,7 +33,7 @@ export default function AdminLayout({ active, title, subtitle, action, children 
     { key: "car-form", label: "Tambah Mobil", href: "/admin/cars/new", icon: IconPlus },
     { key: "brands", label: "Brand", href: "/admin/brands", icon: IconBrand },
     { key: "photos", label: "Foto Mobil", href: "/admin/cars", icon: IconImage },
-    { key: "settings", label: "Pengaturan", href: "#", icon: IconSettings },
+    { key: "settings", label: "Pengaturan", href: "/admin/settings", icon: IconSettings },
   ];
 
   const doLogout = () => {

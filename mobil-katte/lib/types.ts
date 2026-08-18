@@ -56,6 +56,20 @@ export interface Brand {
 export interface Settings {
   wa_number: string;
   admin_email: string;
+  contact_phone: string;
+  contact_address: string;
+  about_kicker: string;
+  about_title: string;
+  about_subtitle: string;
+  about_description: string;
+  about_card1_title: string;
+  about_card1_desc: string;
+  about_card2_title: string;
+  about_card2_desc: string;
+  about_card3_title: string;
+  about_card3_desc: string;
+  about_card4_title: string;
+  about_card4_desc: string;
 }
 
 export interface AdminSession {

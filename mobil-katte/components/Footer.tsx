@@ -8,6 +8,11 @@ import { IconFacebook, IconInstagram, IconMap, IconPhone, IconTiktok, IconWhatsa
 export default function Footer() {
   const { settings } = useCars();
   const waNumber = settings?.wa_number || WA_NUMBER;
+  const phone = settings?.contact_phone || "+62 812-3456-7890";
+  const address = settings?.contact_address || "Jl. Mobil Katte No. 88, Makassar";
+  const aboutText =
+    settings?.about_description ||
+    "Katalog mobil bekas yang cepat, sederhana, transparan, dan mudah dihubungi. Temukan mobil bekas berkualitas dengan informasi kendaraan yang jelas.";
   return (
     <footer className="footer" id="kontak">
       <div className="container footer__top">
@@ -16,10 +21,7 @@ export default function Footer() {
             <img src="/assets/logo.png" alt="Mobil Katte" className="brand-logo" />
             <span>MOBIL KATTE</span>
           </div>
-          <p>
-            Katalog mobil bekas yang cepat, sederhana, transparan, dan mudah dihubungi. Temukan
-            mobil bekas berkualitas dengan informasi kendaraan yang jelas.
-          </p>
+          <p>{aboutText}</p>
           <div className="footer__social">
             <a href="#" aria-label="Instagram">
               <IconInstagram />
@@ -64,11 +66,11 @@ export default function Footer() {
             </li>
             <li style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <IconPhone />
-              <span>+62 812-3456-7890</span>
+              <span>{phone}</span>
             </li>
             <li style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <IconMap />
-              <span>Jl. Mobil Katte No. 88, Makassar</span>
+              <span>{address}</span>
             </li>
           </ul>
         </div>

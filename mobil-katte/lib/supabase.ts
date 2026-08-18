@@ -29,7 +29,7 @@ export interface CarRow {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
-  photos: { photo_url: string; sort_order: number }[] | null;
+  car_photos: { photo_url: string; sort_order: number }[] | null;
 }
 
 export function rowToCar(row: CarRow): Car {
@@ -55,7 +55,7 @@ export function rowToCar(row: CarRow): Car {
     status: row.status,
     featured: row.featured,
     createdAt: row.created_at,
-    photos: (row.photos ?? []).slice().sort((a, b) => a.sort_order - b.sort_order).map((p) => p.photo_url),
+    photos: (row.car_photos ?? []).slice().sort((a, b) => a.sort_order - b.sort_order).map((p) => p.photo_url),
     deletedAt: row.deleted_at ?? undefined,
   };
 }

@@ -22,6 +22,7 @@ import {
   softDeleteCar,
   updateBrand,
   updateCar,
+  updateSettings,
 } from "./api";
 import type { AdminSession, Brand, Car, CarInput, Settings } from "./types";
 
@@ -57,6 +58,7 @@ interface DataContextValue {
   addBrand: (name: string) => Promise<void>;
   renameBrand: (id: number, name: string) => Promise<void>;
   deleteBrandById: (id: number) => Promise<void>;
+  saveSettings: (patch: Partial<Settings>) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextValue | null>(null);
@@ -131,6 +133,14 @@ export function CarsProvider({ children }: { children: ReactNode }) {
     [reload]
   );
 
+  const saveSettings = useCallback(
+    async (patch: Partial<Settings>) => {
+      await updateSettings(patch);
+      await reload();
+    },
+    [reload]
+  );
+
   const value = useMemo<DataContextValue>(
     () => ({
       cars,
@@ -143,8 +153,9 @@ export function CarsProvider({ children }: { children: ReactNode }) {
       addBrand,
       renameBrand,
       deleteBrandById,
+      saveSettings,
     }),
-    [cars, brands, settings, loading, reload, saveCar, removeCar, addBrand, renameBrand, deleteBrandById]
+    [cars, brands, settings, loading, reload, saveCar, removeCar, addBrand, renameBrand, deleteBrandById, saveSettings]
   );
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;

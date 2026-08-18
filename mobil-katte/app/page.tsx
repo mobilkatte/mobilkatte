@@ -3,7 +3,8 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import HeroSearch from "@/components/home/HeroSearch";
 import { FeaturedGrid, NewestGrid } from "@/components/home/HomeGrids";
-import { IconCar, IconMoney, IconShield, IconWhatsapp } from "@/components/icons";
+import AboutSection from "@/components/home/AboutSection";
+import CTASection from "@/components/home/CTASection";
 
 export default function Home() {
   return (
@@ -75,61 +76,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" id="tentang">
-        <div className="container">
-          <div className="section-head">
-            <span className="kicker">Kenapa Kami</span>
-            <h2>Mengapa Mobil Katte?</h2>
-            <p>Kami membuat jual beli mobil bekas jadi mudah, jelas, dan terpercaya.</p>
-          </div>
-          <div className="why">
-            <div className="why__item">
-              <div className="icon">
-                <IconShield />
-              </div>
-              <h3>Informasi Jelas</h3>
-              <p>Setiap mobil dilengkapi data lengkap: tahun, pajak, kilometer, hingga kondisi kendaraan.</p>
-            </div>
-            <div className="why__item">
-              <div className="icon">
-                <IconCar />
-              </div>
-              <h3>Pilihan Beragam</h3>
-              <p>Ratusan mobil dari 12+ brand ternama dengan berbagai tipe dan rentang harga.</p>
-            </div>
-            <div className="why__item">
-              <div className="icon">
-                <IconMoney />
-              </div>
-              <h3>Harga Transparan</h3>
-              <p>Harga tertera jelas di setiap unit. Tanpa biaya tersembunyi, apa adanya.</p>
-            </div>
-            <div className="why__item">
-              <div className="icon">
-                <IconWhatsapp />
-              </div>
-              <h3>Mudah Dihubungi</h3>
-              <p>Hubungi kami langsung lewat WhatsApp dengan satu klik dari halaman mobil.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <AboutSection />
 
-      <section className="section">
-        <div className="container">
-          <div className="cta">
-            <h2>Tidak menemukan mobil yang Anda cari?</h2>
-            <p>Kami bantu cari mobil bekas sesuai budget dan kebutuhan Anda. Cukup kirim pesan ke WhatsApp kami.</p>
-            <a
-              href="https://wa.me/6281234567890?text=Halo%20Mobil%20Katte%2C%20saya%20mencari%20mobil%20bekas..."
-              target="_blank"
-              className="btn btn--white btn--lg"
-            >
-              Chat via WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
+      <CTASection />
 
       <Footer />
     </>

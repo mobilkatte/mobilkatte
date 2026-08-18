@@ -306,6 +306,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-head); line-height: 1.25; font-weig
 .cta::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(216,2,3,.45), transparent 50%); }
 .cta h2 { font-size: clamp(22px, 3vw, 32px); position: relative; }
 .cta p { color: #cbd5e1; margin: 10px auto 24px; max-width: 520px; position: relative; }
+.cta a.btn { position: relative; z-index: 1; }
 
 /* ---------- Footer ---------- */
 .footer { background: var(--navy); color: #94a3b8; margin-top: 70px; }

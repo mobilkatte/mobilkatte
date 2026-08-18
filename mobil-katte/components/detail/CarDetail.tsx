@@ -130,7 +130,7 @@ export default function CarDetail() {
             <span className="gallery__count">
               {index + 1} / {photos.length}
             </span>
-            <SmartImage src={photos[index]} alt={`Foto ${car.brand} ${car.name}`} lazy={false} />
+            <SmartImage key={photos[index]} src={photos[index]} alt={`Foto ${car.brand} ${car.name}`} lazy={false} />
           </div>
           <div className="gallery__thumbs">
             {photos.map((p, i) => (
