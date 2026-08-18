@@ -133,14 +133,9 @@ from (
 ) as p(slug, url, ord)
 join public.cars c on c.slug = p.slug;
 
--- Admin demo (password: admin123)
-insert into public.admins (email, password_hash, name) values
-  ('admin@mobilkatte.com', 'acd3bf24958fd53321deb122fcde621d3f1b0f2fd27e212330f449eab2d0b20d', 'Administrator');
-
 -- Settings aplikasi
 insert into public.settings (key, value) values
-  ('wa_number', '6281234567890'),
-  ('admin_email', 'admin@mobilkatte.com');
+  ('wa_number', '6281234567890');
 
 -- Sinkronkan identity sequence (id dimasukkan eksplisit, sequence tidak ikut naik).
 select setval(pg_get_serial_sequence('public.brands', 'id'), (select coalesce(max(id), 1) from public.brands));

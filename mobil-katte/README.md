@@ -10,7 +10,7 @@ SUPABASE_SERVICE_ROLE_KEY=...
 AUTH_SECRET=...
 ```
 
-Login admin demo: `admin@mobilkatte.com` / `admin123`.
+Login admin: masukkan akun yang terdaftar di tabel `public.admins` (Supabase).
 
 ## API Routes
 

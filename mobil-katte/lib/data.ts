@@ -1,8 +1,6 @@
 import type { Car } from "./types";
 
 export const WA_NUMBER = "6281234567890";
-export const ADMIN_EMAIL = "admin@mobilkatte.com";
-export const ADMIN_PASSWORD = "admin123";
 
 // Referensi brand default. Sumber data utama brand ada di tabel `brands` (Supabase).
 export const BRANDS: string[] = [

@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const SETTINGS_DEFAULTS: Settings = {
   wa_number: "6281234567890",
-  admin_email: "admin@mobilkatte.com",
+  admin_email: "",
   contact_phone: "+62 812-3456-7890",
   contact_address: "Jl. Mobil Katte No. 88, Makassar",
   about_kicker: "Kenapa Kami",

@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
             <input
               id="email"
               type="text"
-              placeholder="admin@mobilkatte.com"
+              placeholder="email@perusahaan.com"
               autoComplete="username"
               required
               value={email}
@@ -72,10 +72,6 @@ export default function AdminLoginPage() {
             Login
           </button>
         </form>
-
-        <div className="demo-note">
-          <b>Akun demo:</b> admin@mobilkatte.com · admin123
-        </div>
       </div>
     </div>
   );
