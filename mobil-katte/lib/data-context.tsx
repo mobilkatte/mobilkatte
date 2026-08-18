@@ -196,9 +196,13 @@ export function useAdminAuth() {
   );
 
   const login = useCallback(async (email: string, password: string) => {
-    const ok = await apiAdminLogin(email, password);
-    if (ok) emitChange("mk_admin");
-    return ok;
+    try {
+      const ok = await apiAdminLogin(email, password);
+      if (ok) emitChange("mk_admin");
+      return ok;
+    } catch {
+      return false;
+    }
   }, []);
 
   const logout = useCallback(() => {
