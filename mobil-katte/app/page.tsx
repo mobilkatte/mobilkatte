@@ -5,7 +5,6 @@ import HeroSearch from "@/components/home/HeroSearch";
 import { FeaturedGrid, NewestGrid } from "@/components/home/HomeGrids";
 import AboutSection from "@/components/home/AboutSection";
 import CTASection from "@/components/home/CTASection";
-import SellCarSection from "@/components/home/SellCarSection";
 
 export default function Home() {
   return (
@@ -78,8 +77,6 @@ export default function Home() {
       </section>
 
       <AboutSection />
-
-      <SellCarSection />
 
       <CTASection />
 

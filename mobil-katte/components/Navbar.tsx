@@ -13,13 +13,14 @@ export default function Navbar() {
   const links = [
     { key: "home", label: "Home", href: "/" },
     { key: "catalog", label: "Katalog Mobil", href: "/mobil" },
-    { key: "sell", label: "Jual Mobil", href: "/#jual-mobil" },
+    { key: "sell", label: "Jual Mobil", href: "/jual-mobil" },
     { key: "about", label: "Tentang Kami", href: "/#tentang" },
     { key: "contact", label: "Kontak", href: "/#kontak" },
   ];
 
   const isActive = (key: string, href: string) => {
     if (key === "home") return pathname === "/";
+    if (key === "sell") return pathname.startsWith("/jual-mobil");
     if (href.startsWith("/#")) return pathname === "/";
     return pathname.startsWith("/mobil");
   };
