@@ -78,3 +78,55 @@ export interface AdminSession {
   token: string;
   loginAt: string;
 }
+
+export type SellOfferStatus = "Baru" | "Dihubungi" | "Diterima" | "Ditolak";
+
+export interface SellOffer {
+  id: number;
+  brand: string;
+  name: string;
+  type: string;
+  year: number | null;
+  price: number | null;
+  mileage: number;
+  transmission: string;
+  fuel: string;
+  color: string;
+  taxStatus: string;
+  location: string;
+  plate: string;
+  description: string;
+  sellerName: string;
+  sellerPhone: string;
+  sellerEmail: string | null;
+  status: SellOfferStatus;
+  adminNote: string | null;
+  photos: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SellOfferInput {
+  brand: string;
+  name: string;
+  type: string;
+  year?: number | null;
+  price?: number | null;
+  mileage?: number;
+  transmission?: string;
+  fuel?: string;
+  color?: string;
+  taxStatus?: string;
+  location?: string;
+  plate?: string;
+  description?: string;
+  sellerName: string;
+  sellerPhone: string;
+  sellerEmail?: string | null;
+  photos?: string[];
+}
+
+export interface SellOfferPatch {
+  status?: SellOfferStatus;
+  adminNote?: string | null;
+}

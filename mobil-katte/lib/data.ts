@@ -48,6 +48,16 @@ export function carStatusLabel(status: string): string {
   return status === "Terjual" ? "TERJUAL" : "";
 }
 
+export function offerStatusClass(status: string): string {
+  switch (status) {
+    case "Baru": return "badge--offer-baru";
+    case "Dihubungi": return "badge--offer-dihubungi";
+    case "Diterima": return "badge--offer-diterima";
+    case "Ditolak": return "badge--offer-ditolak";
+    default: return "badge--offer-baru";
+  }
+}
+
 export function photoFallback(): string {
   return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a1a1d"/><stop offset="1" stop-color="#26262a"/></linearGradient></defs><rect width="800" height="600" fill="url(#g)"/><text x="400" y="330" font-family="Arial" font-size="34" fill="rgba(255,255,255,.9)" text-anchor="middle">MOBIL KATTE</text></svg>'

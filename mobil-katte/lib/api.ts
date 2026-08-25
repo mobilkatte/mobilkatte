@@ -1,6 +1,6 @@
 "use client";
 
-import type { AdminSession, Brand, Car, CarInput, Settings } from "./types";
+import type { AdminSession, Brand, Car, CarInput, SellOffer, SellOfferInput, SellOfferPatch, Settings } from "./types";
 
 const SESSION_KEY = "mk_admin";
 
@@ -153,4 +153,37 @@ export async function adminLogin(email: string, password: string): Promise<boole
     loginAt: new Date().toISOString(),
   });
   return true;
+}
+
+export interface SellOffersQuery {
+  keyword?: string;
+  status?: string;
+}
+
+export function createSellOffer(input: SellOfferInput): Promise<{ ok: boolean; id: number }> {
+  return http<{ ok: boolean; id: number }>("/api/sell-offers", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+}
+
+export function fetchSellOffers(q: SellOffersQuery = {}): Promise<SellOffer[]> {
+  const p = new URLSearchParams();
+  if (q.keyword) p.set("keyword", q.keyword);
+  if (q.status) p.set("status", q.status);
+  const qs = p.toString();
+  return http<{ offers: SellOffer[] }>(qs ? `/api/sell-offers?${qs}` : "/api/sell-offers").then((d) => d.offers);
+}
+
+export function updateSellOffer(id: number, patch: SellOfferPatch): Promise<{ ok: boolean }> {
+  return http<{ ok: boolean }>(`/api/sell-offers/${id}`, {
+    method: "PATCH",
+    headers: authHeaders({ "Content-Type": "application/json" }),
+    body: JSON.stringify(patch),
+  });
+}
+
+export function deleteSellOffer(id: number): Promise<void> {
+  return http(`/api/sell-offers/${id}`, { method: "DELETE", headers: authHeaders() });
 }

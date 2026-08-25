@@ -150,3 +150,124 @@ export async function replacePhotos(supabase: SupabaseClient, carId: number, pho
   );
   if (ie) throw ie;
 }
+
+export interface SellOfferRow {
+  id: number;
+  brand: string;
+  name: string;
+  type: string;
+  year: number | null;
+  price: number | null;
+  mileage: number;
+  transmission: string;
+  fuel: string;
+  color: string;
+  tax_status: string;
+  location: string;
+  plate: string;
+  description: string;
+  seller_name: string;
+  seller_phone: string;
+  seller_email: string | null;
+  status: string;
+  admin_note: string | null;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  sell_offer_photos: { photo_url: string; sort_order: number }[] | null;
+}
+
+export function rowToSellOffer(row: SellOfferRow) {
+  return {
+    id: row.id,
+    brand: row.brand ?? "",
+    name: row.name,
+    type: row.type,
+    year: row.year,
+    price: row.price,
+    mileage: row.mileage ?? 0,
+    transmission: row.transmission ?? "",
+    fuel: row.fuel ?? "",
+    color: row.color ?? "",
+    taxStatus: row.tax_status,
+    location: row.location ?? "",
+    plate: row.plate ?? "",
+    description: row.description ?? "",
+    sellerName: row.seller_name ?? "",
+    sellerPhone: row.seller_phone ?? "",
+    sellerEmail: row.seller_email ?? null,
+    status: (row.status as SellOfferRow["status"]) || "Baru",
+    adminNote: row.admin_note ?? null,
+    photos: (row.sell_offer_photos ?? [])
+      .slice()
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((p) => p.photo_url),
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+const SELL_OFFER_SELECT = "*, sell_offer_photos(photo_url, sort_order)";
+
+export async function insertSellOffer(
+  supabase: SupabaseClient,
+  input: {
+    brand: string;
+    name: string;
+    type: string;
+    year: number | null;
+    price: number | null;
+    mileage: number;
+    transmission: string;
+    fuel: string;
+    color: string;
+    taxStatus: string;
+    location: string;
+    plate: string;
+    description: string;
+    sellerName: string;
+    sellerPhone: string;
+    sellerEmail: string | null;
+    photos: string[];
+  }
+) {
+  const { data: inserted, error } = await supabase
+    .from("sell_offers")
+    .insert({
+      brand: input.brand,
+      name: input.name,
+      type: input.type,
+      year: input.year,
+      price: input.price,
+      mileage: input.mileage,
+      transmission: input.transmission,
+      fuel: input.fuel,
+      color: input.color,
+      tax_status: input.taxStatus,
+      location: input.location,
+      plate: input.plate,
+      description: input.description,
+      seller_name: input.sellerName,
+      seller_phone: input.sellerPhone,
+      seller_email: input.sellerEmail,
+      status: "Baru",
+    })
+    .select("id")
+    .single();
+  if (error) throw error;
+
+  const offerId = inserted.id;
+  if (input.photos.length) {
+    const { error: pe } = await supabase.from("sell_offer_photos").insert(
+      input.photos.map((url, i) => ({ offer_id: offerId, photo_url: url, sort_order: i }))
+    );
+    if (pe) throw pe;
+  }
+  return offerId;
+}
+
+export async function fetchSellOfferRow(supabase: SupabaseClient, id: number): Promise<SellOfferRow> {
+  const { data, error } = await supabase.from("sell_offers").select(SELL_OFFER_SELECT).eq("id", id).single();
+  if (error) throw error;
+  return data as unknown as SellOfferRow;
+}

@@ -10,6 +10,7 @@ import {
   IconDashboard,
   IconImage,
   IconLogout,
+  IconMoney,
   IconPlus,
   IconSettings,
 } from "@/components/icons";
@@ -31,6 +32,7 @@ export default function AdminLayout({ active, title, subtitle, action, children 
     { key: "dashboard", label: "Dashboard", href: "/admin/dashboard", icon: IconDashboard },
     { key: "cars", label: "Data Mobil", href: "/admin/cars", icon: IconCar2 },
     { key: "car-form", label: "Tambah Mobil", href: "/admin/cars/new", icon: IconPlus },
+    { key: "sell-offers", label: "Penawaran Mobil", href: "/admin/sell-offers", icon: IconMoney },
     { key: "brands", label: "Brand", href: "/admin/brands", icon: IconBrand },
     { key: "photos", label: "Foto Mobil", href: "/admin/cars", icon: IconImage },
     { key: "settings", label: "Pengaturan", href: "/admin/settings", icon: IconSettings },
